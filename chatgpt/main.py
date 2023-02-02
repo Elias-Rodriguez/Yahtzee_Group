@@ -7,10 +7,9 @@ def yahtzee():
     rolls = [roll_dice(), roll_dice(), roll_dice(), roll_dice(), roll_dice()]
     print("Rolls:", rolls)
     keep = input("Enter dice to keep (e.g. '1 2 4'): ")
-    if keep:
-        keep = [int(x) - 1 for x in keep.split()]
-        rolls = [rolls[i] if i in keep else roll_dice() for i in range(5)]
-        print("Rolls:", rolls)
+    keep = [int(x) - 1 for x in keep.split()] if keep else []
+    rolls = [rolls[i] if i in keep else roll_dice() for i in range(5)]
+    print("Rolls:", rolls)
     
     counts = [rolls.count(x) for x in range(1, 7)]
     
