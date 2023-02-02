@@ -27,12 +27,13 @@ class User_interactions:
             print('This code needs to be completed still.')
         else:
             user_selection = input('which dice do you want to keep?')
-            user_choices = user_selection.split(" ")
-            user_choices = [int(i) for i in user_choices]
-            print(user_choices)
-            for num in user_choices:
-                self.dice_to_keep.append(self.dice_on_table[num-1])
-                print(self.dice_to_keep)
+            if len(user_selection) > 0:
+                user_choices = user_selection.split(" ")
+                user_choices = [int(i) for i in user_choices]
+                print(user_choices)
+                for num in user_choices:
+                    self.dice_to_keep.append(self.dice_on_table[num-1])
+            self.get_current_score(self.dice_to_keep)
                 
 
 
@@ -95,5 +96,13 @@ class User_interactions:
         for die in self.dice_on_table:
             print(f'\t{die}', end = '')
         print()
+
+    def get_current_score(self, dice_to_keep):
+        score = 0
+        for dice in self.dice_to_keep:
+            score += dice
+
+        print("Your current dice add up to: {}".format(score))
+
 
     
