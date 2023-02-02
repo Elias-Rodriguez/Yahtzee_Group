@@ -6,7 +6,7 @@ def roll_dice():
 def yahtzee():
     rolls = [roll_dice(), roll_dice(), roll_dice(), roll_dice(), roll_dice()]
     print("Rolls:", rolls)
-    keep = input("Enter dice to keep (e.g. '1 2 4'): ")
+    keep = input("Enter dice to keep (e.g. '1 2 4') or press enter to take your score: ")
     keep = [int(x) - 1 for x in keep.split()] if keep else []
     rolls = [rolls[i] if i in keep else roll_dice() for i in range(5)]
     print("Rolls:", rolls)
