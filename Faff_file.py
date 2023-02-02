@@ -7,6 +7,7 @@ class User_interactions:
         self.player_names = []
         self.testing = True
         self.dice_on_table = [1, 2, 3, 4, 5]
+        self.dice_to_keep = []
         self.roll_count = 0
 
     def testing_or_playing(self):
@@ -26,6 +27,13 @@ class User_interactions:
             print('This code needs to be completed still.')
         else:
             user_selection = input('which dice do you want to keep?')
+            user_choices = user_selection.split(" ")
+            user_choices = [int(i) for i in user_choices]
+            print(user_choices)
+            for num in user_choices:
+                self.dice_to_keep.append(self.dice_on_table[num-1])
+                print(self.dice_to_keep)
+                
 
 
     def ask_player_count(self):
@@ -74,3 +82,18 @@ class User_interactions:
         for die in self.dice_on_table:
             print(f'\t{die}', end = '')
         print()
+
+    def roll_remaining(self, dice_left):
+        import random
+        self.roll_count +=1
+        print('New roll.')
+        for die in range(0, len(self.dice_on_table)):
+            self.dice_on_table[die] = random.randint(1,6)
+        print('here are the dice on the table.')
+        print('\nDICE NUMBER\t1\t2\t3\t4\t5')
+        print('DICE VALUE,', end = '')
+        for die in self.dice_on_table:
+            print(f'\t{die}', end = '')
+        print()
+
+    
