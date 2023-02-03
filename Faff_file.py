@@ -10,15 +10,6 @@ class User_interactions:
         self.dice_to_keep = []
         self.roll_count = 0
 
-    def testing_or_playing(self):
-        user_response = input('1 to play, anything else to test: ')
-        if '1' != user_response:
-            print('Entering testing mode.')
-            self.testing = True
-        else:
-            print('Welcome to the game.')
-            self.testing = False
-
     def ask_player_what_to_keep(self):
         print('which dice do you want to keep?')
         print('enter the dice number or numbers to keep')
@@ -34,6 +25,8 @@ class User_interactions:
                 for num in user_choices:
                     self.dice_to_keep.append(self.dice_on_table[num-1])
             self.get_current_score(self.dice_to_keep)
+            self.check_for_upper(self.dice_to_keep)
+
                 
 
 
@@ -104,5 +97,10 @@ class User_interactions:
 
         print("Your current dice add up to: {}".format(score))
 
+    def check_for_upper(self, dice_to_keep):
+        import Zybook_Poker_Dice
+        check_dice = Zybook_Poker_Dice.find_high_score(self.dice_to_keep)
+        print(check_dice)
+    
 
     
