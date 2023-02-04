@@ -28,15 +28,37 @@ class User_interactions:
             self.testing = False
 
     def ask_player_what_to_keep(self):
+        # Commented out The following lines to irrelevancy
+        """
         print('which dice do you want to keep?')
         print('enter the dice number or numbers to keep')
-        print('just press enter to reroll all dice.')
+        print('just press enter to re-roll all dice.')
+
         if self.testing:
             print('This code needs to be completed still.')
         else:
             user_selection = input('which dice do you want to keep?')
+        """
+        user_selection = input('''
+        Would you like to keep any dice? 
+        ''')
+
+        if "" == user_selection:
+            '''
+        Invalid Selection'''
+            self.ask_player_what_to_keep()
+        elif "yes" == user_selection:
+            pick_dice = input('''
+        Which dice would you like to keep?
+        Separate each selection with a comma and hit enter once done.  
+            '''.split(","))
+
+
+
+
 
     def ask_player_count(self):
+
         if self.testing:
             player_count = 3
         else:
@@ -87,12 +109,16 @@ class User_interactions:
     def roll_new_five(self):
         import random
         self.roll_count = 1
-        print('New roll.')
+        print('''
+        New roll.''')
         for die in range(0, len(self.dice_on_table)):
             self.dice_on_table[die] = random.randint(1, 6)
-        print('here are the dice on the table.')
-        print('\nDICE NUMBER: \t1\t2\t3\t4\t5')
-        print('DICE VALUE:', end='')
+        print('''
+        Here are the dice on the table.''')
+        print('''
+        DICE NUMBER: \t1\t2\t3\t4\t5''')
+        print('''
+        DICE VALUE:''', end=' ')
         for die in self.dice_on_table:
             print(f'\t{die}', end='')
         print()
