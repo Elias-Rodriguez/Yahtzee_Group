@@ -5,27 +5,20 @@ class User_interactions:
         self.data = []
         self.player_count = 0
         self.player_names = []
-        self.testing = True
+        self.testing = False
         self.dice_on_table = [1, 2, 3, 4, 5]
         self.dice_to_keep = []
         self.roll_count = 0
 
     def ask_player_what_to_keep(self):
-        print('which dice do you want to keep?')
-        print('enter the dice number or numbers to keep')
-        print('just press enter to reroll all dice.')
-        if self.testing:
-            print('This code needs to be completed still.')
-        else:
-            user_selection = input('which dice do you want to keep?')
-            if len(user_selection) > 0:
-                user_choices = user_selection.split(" ")
-                user_choices = [int(i) for i in user_choices]
-                print(user_choices)
-                for num in user_choices:
-                    self.dice_to_keep.append(self.dice_on_table[num-1])
-            self.get_current_score(self.dice_to_keep)
-            self.check_for_upper(self.dice_to_keep)
+        user_selection = input('which dice do you want to keep?')
+        if len(user_selection) > 0:
+            user_choices = user_selection.split(" ")
+            user_choices = [int(float(i)) for i in user_choices]
+            print(user_choices)
+            for num in user_choices:
+                self.dice_to_keep.append(self.dice_on_table[num-1])
+        self.get_current_score(self.dice_to_keep)
 
                 
 

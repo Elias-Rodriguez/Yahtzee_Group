@@ -1,30 +1,35 @@
 # Find highest score
 def find_high_score(values):
     high_score = 0
-    score = check_three_of_kind(values)
-    if score > high_score:
-        high_score = score
+    
+    if len(values) > 2:
+        score = check_three_of_kind(values)
+        if score > high_score:
+            high_score = score
+    if len(values) > 3:
+        score = check_four_of_kind(values)
+        if score > high_score:
+            high_score = score
 
-    score = check_four_of_kind(values)
-    if score > high_score:
-        high_score = score
+    if len(values) > 4:
+        score = check_five_of_kind(values)
+        if score > high_score:
+            high_score = score
 
-    score = check_five_of_kind(values)
-    if score > high_score:
-        high_score = score
+        score = check_full_house(values)
+        if score > high_score:
+            high_score = score
+        
+        score = check_straight(values)
+        if score > high_score:
+            high_score = score
 
-    score = check_full_house(values)
-    if score > high_score:
-        high_score = score
-
-    for val in range(1, 7):
+    for val in values:
         score = check_singles(values, val)
         if score > high_score:
             high_score = score
 
-    score = check_straight(values)
-    if score > high_score:
-        high_score = score
+    
 
     return high_score
 
