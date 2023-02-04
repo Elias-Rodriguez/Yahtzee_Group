@@ -14,10 +14,11 @@ our_object.ask_player_count()
 our_object.ask_player_names()
 
 while True:
-    for player_number in range(0, our_object.get_player_count()):
-        print(f'ready player {player_number + 1}, aka {our_object.get_player_name(player_number)}')
+    if our_object.finish:
+        print('\nGood round everyone!')
+        break
+    if our_object.roll_count == 1:
+        print(f'ready player {our_object.player_number}, aka {our_object.player_names[our_object.player_number - 1]}')
+    our_object.roll_new_five()
+    our_object.ask_player_what_to_keep()
 
-        our_object.roll_new_five()
-        our_object.ask_player_what_to_keep()
-    print('good round everyone!')
-    break
