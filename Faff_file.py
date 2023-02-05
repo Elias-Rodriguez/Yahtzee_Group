@@ -147,6 +147,9 @@ class User_interactions:
             for die in self.dice_on_table:
                 print(f'\t{die}', end = '')
             print()
+            if self.roll_count < 3:
+                self.ask_player_what_to_keep()
+        
 
 
     def get_current_score(self, dice, score):
