@@ -13,6 +13,8 @@ class User_interactions:
         self.dice_on_table = [1, 2, 3, 4, 5]
         self.roll_count = 0
         self.numb = 0
+        self.dice_to_keep = []
+        self.score = 0
 
     def testing_or_playing(self):
         user_response = input('''
@@ -48,11 +50,17 @@ class User_interactions:
         Invalid Selection'''
             self.ask_player_what_to_keep()
         elif "yes" == user_selection:
-            pick_dice = input('''
+            if len(user_selection) > 0:
+                user_selection = input('''
         Which dice would you like to keep?
-        Separate each selection with a comma and hit enter once done.  
-            '''.split(","))
-
+        Separate each selection with a comma and hit enter once done.
+        ''')
+            user_choices = user_selection.split(",")
+            user_choices = [int(float(i)) for i in user_choices]
+            print(user_choices)
+            for num in user_choices:
+                self.dice_to_keep.append(self.dice_on_table[num-1])
+        self.get_current_score(self.dice_to_keep, self.score)
 
 
 
@@ -122,3 +130,9 @@ class User_interactions:
         for die in self.dice_on_table:
             print(f'\t{die}', end='')
         print()
+
+    def get_current_score(self, dice_to_keep, score):
+        for dice in self.dice_to_keep:
+            score += dice
+
+        print("Your current dice add up to: {}".format(score))
