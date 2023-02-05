@@ -60,7 +60,10 @@ class User_interactions:
             print(user_choices)
             for num in user_choices:
                 self.dice_to_keep.append(self.dice_on_table[num-1])
-        self.get_current_score(self.dice_to_keep, self.score)
+                self.data.append(self.dice_on_table[num-1])
+                self.dice_on_table.remove(self.dice_on_table[num-1])
+        self.get_current_score(self.data, self.score)
+        self.roll_remaining(self.dice_on_table)
 
 
 
@@ -131,8 +134,23 @@ class User_interactions:
             print(f'\t{die}', end='')
         print()
 
-    def get_current_score(self, dice_to_keep, score):
-        for dice in self.dice_to_keep:
-            score += dice
+    def roll_remaining(self, dice_on_table):
+        if self.roll_count < 3:
+            import random
+            self.roll_count +=1
+            print('New roll.')
+            for die in range(0, len(self.dice_on_table)):
+                self.dice_on_table[die] = random.randint(1,6)
+            print('here are the dice on the table.')
+            print('\nDICE NUMBER\t1\t2\t3\t4\t5')
+            print('DICE VALUE,', end = '')
+            for die in self.dice_on_table:
+                print(f'\t{die}', end = '')
+            print()
 
-        print("Your current dice add up to: {}".format(score))
+
+    def get_current_score(self, dice, score):
+        for die in self.data:
+            self.score += die
+
+        print("Your current dice add up to: {}".format(self.score))
