@@ -22,12 +22,13 @@ class User_interactions:
 
     def testing_or_playing(self):
         print('Hello, Welcome to Yahtzee.')
+        print(instructions.full_instructions)
         user_response = input('1 to play, anything else to test: ')
         if '1' != user_response:
             print('Entering testing mode.')
             self.testing = True
         else:
-            print('Welcome to the game.')
+            # print('Welcome to the game.')
             self.testing = False
 
     def ask_player_what_to_keep(self):
@@ -53,6 +54,7 @@ class User_interactions:
             self.dice_chance = 0
             self.player_number += 1
             self.roll_count = 1
+            self.score = 0
 
     def ask_player_count(self):
         player_count = input('hello, how many players would you like?')
@@ -109,7 +111,6 @@ class User_interactions:
             if d == number_to_score:
                 self.score += d
         print('Your score is ' + str(self.score))
-        print(instructions.full_instructions)
 
     def roll_remaining(self, dice_on_table):
         if self.roll_count < 3:
