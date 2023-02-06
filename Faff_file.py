@@ -1,171 +1,122 @@
-import instructions
-
-inst = instructions
+import random
 
 
 class User_interactions:
 
     def __init__(self):
         self.data = []
-        self.player_count = 1
+        self.player_count = 0
+        self.dice_chance = 0
+        self.player_number = 1
         self.player_names = []
         self.testing = True
         self.dice_on_table = [1, 2, 3, 4, 5]
-        self.roll_count = 0
-        self.numb = 0
-        self.dice_to_keep = []
+        self.roll_count = 1
+        self.next_person = False
+        self.finish = False
+        self.keep_dice = False
+        self.keep_dice_number_array = []
         self.score = 0
+        self.score_list = []
 
     def testing_or_playing(self):
-        user_response = input('''
-        Hello, Welcome to Yahtzee.
-        Type Start to play or Help for instruction.
-        ''')
-        if 'Start' != user_response:
-            print(inst.full_instructions)
-            self.testing_or_playing()
+        user_response = input('1 to play, anything else to test: ')
+        if '1' != user_response:
+            print('Entering testing mode.')
+            self.testing = True
         else:
-            print('''
-        Welcome to the game!''', end="")
+            print('Welcome to the game.')
             self.testing = False
 
     def ask_player_what_to_keep(self):
-        # Commented out The following lines to irrelevancy
-        """
-        print('which dice do you want to keep?')
-        print('enter the dice number or numbers to keep')
-        print('just press enter to re-roll all dice.')
-
         if self.testing:
             print('This code needs to be completed still.')
         else:
-            user_selection = input('which dice do you want to keep?')
-        """
-        user_selection = input('''
-        Would you like to keep any dice? 
-        ''')
+            self.dice_chance += 1
+            if self.dice_chance < 3:
+                user_selection = input('\na. Reroll all b. Choose dice number to reroll c. Finish)')
+                if user_selection == 'b':
+                    keep_dice_number = input('Which dice tou want to reroll? (Use space to separate the numbers)')
+                    self.keep_dice_number_array = keep_dice_number.split()
+                    self.keep_dice = True
+                elif user_selection == 'c':
+                    self.turn_next_person()
+            elif self.dice_chance == 3:
+                self.turn_next_person()
 
-        if "" == user_selection:
-            '''
-        Invalid Selection'''
-            self.ask_player_what_to_keep()
-        elif "yes" == user_selection:
-            if len(user_selection) > 0:
-                user_selection = input('''
-        Which dice would you like to keep?
-        Separate each selection with a comma and hit enter once done.
-        ''')
-            user_choices = user_selection.split(",")
-            user_choices = [int(float(i)) for i in user_choices]
-            print('You selected to keep the following dice {}'.format(user_choices))
-            dice_copy = self.dice_on_table
-
-            shift = 1
-            for num in user_choices:
-                self.dice_to_keep.append(dice_copy[num-1])
-                self.data.append(dice_copy[num-1])
-                self.dice_on_table.pop(num-shift)
-                shift +=1
-
-
-        self.get_current_score(self.dice_to_keep, self.score)
-        self.roll_remaining(self.dice_on_table)
-
-
-
+    def turn_next_person(self):
+        self.display_score()
+        if self.player_number == self.player_count:
+            self.finish = True
+        else:
+            print('\n--------next person------------')
+            self.next_person = True
+            self.dice_chance = 0
+            self.player_number += 1
+            self.roll_count = 1
 
     def ask_player_count(self):
-
         if self.testing:
             player_count = 3
         else:
-            player_count = input('''
-        How many players would you like?''')
+            player_count = input('hello, how many players would you like?')
 
         self.player_count = int(player_count)
         if 0 >= self.player_count:
-            print('''
-        You don\'t want to play.''')
+            print('you don\'t want to play.')
         elif 1 == self.player_count:
-            print('''
-        You want one player ''')
+            print('you want one player ')
         elif 2 <= self.player_count:
-            print(f'''
-        You want {self.player_count} players.''')
-
-    def get_player_count(self):
-        return self.player_count
+            print(f'you want {self.player_count} players.')
 
     def ask_player_names(self):
-
         if self.testing:
             self.player_names.append('bob')
             self.player_names.append('susan')
             self.player_names.append('link')
         else:
-            for item in range(self.numb, self.player_count):
-                name = input(f'''
-        Player {self.numb + 1}, please enter your name: ''')
-                if "" == name:
-                    print('''
-        Invalid Entry. Please try again.''')
-                    self.ask_player_names()
+            for item in range(0, self.player_count):
+                name = input(f'Player {item + 1}, please enter your name: ')
+                self.player_names.append(name)
 
-                else:
-                    self.player_names.append(name)
-                    self.numb += 1
-
-        print(f'''
-        for this game, we have the following players:
-        {self.player_names}
-        ''')
-
-    def get_player_name(self, player_number):
-        return self.player_names[player_number]
+        print('for this game, we have the following player:')
+        print(self.player_names)
 
     def roll_new_five(self):
-        import random
-        self.roll_count = 1
-        print('''
-        New roll.''')
-        for die in range(0, len(self.dice_on_table)):
-            self.dice_on_table[die] = random.randint(1, 6)
-        print('''
-        Here are the dice on the table.''')
-        print('''
-        DICE NUMBER: \t1\t2\t3\t4\t5''')
-        print('''
-        DICE VALUE:''', end=' ')
+        if not self.keep_dice:
+            self.roll_count += 1
+            print('New roll.')
+            for die in range(0, len(self.dice_on_table)):
+                self.dice_on_table[die] = random.randint(1, 6)
+
+        else:
+            for index, ch in enumerate(self.keep_dice_number_array):
+                self.keep_dice_number_array[index] = int(ch) - 1
+            for index in self.keep_dice_number_array:
+                self.dice_on_table[index] = random.randint(1, 6)
+
+        print('here are the dice on the table.')
+        print('\nDICE NUMBER\t1\t2\t3\t4\t5')
+        print('DICE VALUE ', end='')
         for die in self.dice_on_table:
             print(f'\t{die}', end='')
         print()
 
-    def roll_remaining(self, dice_on_table):
-        if self.roll_count < 3:
-            import random
-            self.roll_count +=1
-            print('New roll.')
-            for die in range(0, len(self.dice_on_table)):
-                self.dice_on_table[die] = random.randint(1,6)
-            print('here are the dice on the table.')
-            print('\nDICE NUMBER\t1\t2\t3\t4\t5')
-            print('DICE VALUE,', end = '')
-            for die in self.dice_on_table:
-                print(f'\t{die}', end = '')
-            print()
-            if self.roll_count < 3:
-                self.ask_player_what_to_keep()
-        
+    def display_score(self):
+        number_valid = False
+        while not number_valid:
+            number_to_score = int(input('\nWhat number do you want to score?'))
+            if number_to_score not in self.score_list:
+                number_valid = True
+            else:
+                print('You have already scored that number.')
+                print('You have scored numbers ', end='')
+                for num in self.score_list:
+                    print(str(num) + '', end='')
+                print()
 
-
-    def get_current_score(self, dice, score):
-        score = 0
-        for die in self.dice_to_keep:
-            score += die
-
-        print("Your current dice add up to: {}".format(score))
-
-    def check_for_upper(self, dice_to_keep):
-        import Zybook_Poker_Dice
-        check_dice = Zybook_Poker_Dice.find_high_score(self.data)
-        print(check_dice)
+        self.score_list.append(number_to_score)
+        for d in self.dice_on_table:
+            if d == number_to_score:
+                self.score += d
+        print('Your score is ' + str(self.score))
