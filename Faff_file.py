@@ -7,7 +7,7 @@ class User_interactions:
 
     def __init__(self):
         self.data = []
-        self.player_count = 0
+        self.player_count = 1
         self.player_names = []
         self.testing = True
         self.dice_on_table = [1, 2, 3, 4, 5]
@@ -57,11 +57,12 @@ class User_interactions:
         ''')
             user_choices = user_selection.split(",")
             user_choices = [int(float(i)) for i in user_choices]
-            print(user_choices)
+            print('You selected to keep the following dice {}'.format(user_choices))
             for num in user_choices:
                 self.dice_to_keep.append(self.dice_on_table[num-1])
                 self.data.append(self.dice_on_table[num-1])
                 self.dice_on_table.remove(self.dice_on_table[num-1])
+
         self.get_current_score(self.data, self.score)
         self.roll_remaining(self.dice_on_table)
 

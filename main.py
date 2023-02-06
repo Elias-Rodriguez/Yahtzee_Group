@@ -9,8 +9,6 @@ our_object = Faff_file.User_interactions()
 
 our_object.testing_or_playing()
 
-our_object.ask_player_count()
-
 our_object.ask_player_names()
 
 while True:
