@@ -58,12 +58,17 @@ class User_interactions:
             user_choices = user_selection.split(",")
             user_choices = [int(float(i)) for i in user_choices]
             print('You selected to keep the following dice {}'.format(user_choices))
-            for num in user_choices:
-                self.dice_to_keep.append(self.dice_on_table[num-1])
-                self.data.append(self.dice_on_table[num-1])
-                self.dice_on_table.remove(self.dice_on_table[num-1])
+            dice_copy = self.dice_on_table
 
-        self.get_current_score(self.data, self.score)
+            shift = 1
+            for num in user_choices:
+                self.dice_to_keep.append(dice_copy[num-1])
+                self.data.append(dice_copy[num-1])
+                self.dice_on_table.pop(num-shift)
+                shift +=1
+
+
+        self.get_current_score(self.dice_to_keep, self.score)
         self.roll_remaining(self.dice_on_table)
 
 
@@ -154,7 +159,13 @@ class User_interactions:
 
 
     def get_current_score(self, dice, score):
-        for die in self.data:
-            self.score += die
+        score = 0
+        for die in self.dice_to_keep:
+            score += die
 
-        print("Your current dice add up to: {}".format(self.score))
+        print("Your current dice add up to: {}".format(score))
+
+    def check_for_upper(self, dice_to_keep):
+        import Zybook_Poker_Dice
+        check_dice = Zybook_Poker_Dice.find_high_score(self.data)
+        print(check_dice)
