@@ -36,7 +36,7 @@ class User_interactions:
         if self.dice_chance < 3:
             user_selection = input('\na. Reroll all b. Choose dice number to reroll c. Finish')
             if user_selection == 'b':
-                keep_dice_number = input('Which dice tou want to reroll? (Use space to separate the numbers)')
+                keep_dice_number = input('Which dice do you want to reroll? (Use space to separate the numbers)')
                 self.keep_dice_number_array = keep_dice_number.split()
                 self.keep_dice = True
             elif user_selection == 'c':
@@ -55,6 +55,7 @@ class User_interactions:
             self.player_number += 1
             self.roll_count = 1
             self.score = 0
+            self.score_list = []
 
     def ask_player_count(self):
         player_count = input('hello, how many players would you like?')
