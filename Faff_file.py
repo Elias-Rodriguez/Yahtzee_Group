@@ -1,6 +1,7 @@
 import random
-import instructions
-import Zybook_Poker_Dice
+import instructions as inst
+
+
 
 class User_interactions:
 
@@ -21,15 +22,21 @@ class User_interactions:
         self.score_list = []
 
     def testing_or_playing(self):
-        print('Hello, Welcome to Yahtzee.')
-        print(instructions.full_instructions)
-        user_response = input('1 to play, anything else to test: ')
-        if '1' != user_response:
-            print('Entering testing mode.')
-            self.testing = True
-        else:
-            # print('Welcome to the game.')
+        user_response = input('''
+                Hello, Welcome to Yahtzee.
+                Type Start to play or Help for instruction.
+                ''')
+        if 'Help'.lower() == user_response.lower():
+            print(inst.full_instructions)
+            self.testing_or_playing()
+        elif "Start".lower() == user_response.lower():
+            print('''
+                Welcome to the game!
+                ''')
             self.testing = False
+        else:
+            print("Invalid response, please try again.")
+            self.testing_or_playing()
 
     def ask_player_what_to_keep(self):
         self.dice_chance += 1
@@ -58,7 +65,7 @@ class User_interactions:
             self.score_list = []
 
     def ask_player_count(self):
-        player_count = input('hello, how many players would you like?')
+        player_count = input('How many players would you like?')
         self.player_count = int(player_count)
         if 0 >= self.player_count:
             print('you don\'t want to play.')
