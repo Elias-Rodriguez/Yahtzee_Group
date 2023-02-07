@@ -20,6 +20,7 @@ class User_interactions:
         self.keep_dice_number_array = []
         self.score = 0
         self.score_list = []
+        self.game_over = False
 
     def testing_or_playing(self):
         user_response = input('''
@@ -41,13 +42,15 @@ class User_interactions:
     def ask_player_what_to_keep(self):
         self.dice_chance += 1
         if self.dice_chance < 3:
-            user_selection = input('\na. Reroll all b. Choose dice number to reroll c. Finish')
+            user_selection = input('\na. Reroll all b. Choose dice number to reroll c. Finish current round d. End game')
             if user_selection == 'b':
                 keep_dice_number = input('Which dice do you want to reroll? (Use space to separate the numbers)')
                 self.keep_dice_number_array = keep_dice_number.split()
                 self.keep_dice = True
             elif user_selection == 'c':
                 self.turn_next_person()
+            elif user_selection == 'd':
+                self.game_over = True
         elif self.dice_chance == 3:
             self.turn_next_person()
 
@@ -55,6 +58,7 @@ class User_interactions:
         self.display_score()
         if self.player_number == self.player_count:
             self.finish = True
+            self.player_number = 1
         else:
             print('\n--------next person------------')
             self.next_person = True
@@ -84,7 +88,7 @@ class User_interactions:
     def roll_new_five(self):
         if not self.keep_dice:
             self.roll_count += 1
-            print('New roll.')
+            print('New roll for player: {}'.format(self.player_names[self.player_number-1]))
             for die in range(0, len(self.dice_on_table)):
                 self.dice_on_table[die] = random.randint(1, 6)
 
