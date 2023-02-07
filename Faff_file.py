@@ -1,6 +1,6 @@
 import random
 import instructions as inst
-
+import Yahtzee_Lower_section as scores
 
 
 class User_interactions:
@@ -106,6 +106,14 @@ class User_interactions:
         print()
 
     def display_score(self):
+
+        possible_scores = scores.lower_section()
+        # possible_scores.test()
+        possible_scores.take_dice(self.dice_on_table)
+        possible_scores.dice_count()
+        possible_scores.score_scanner()
+        possible_scores.print_lower_scorecard_options()
+        '''
         number_valid = False
         while not number_valid:
             number_to_score = int(input('\nWhat number do you want to score?'))
@@ -123,7 +131,7 @@ class User_interactions:
             if d == number_to_score:
                 self.score += d
         print('Your score is ' + str(self.score))
-
+        '''
     def roll_remaining(self, dice_on_table):
         if self.roll_count < 3:
             import random
