@@ -14,7 +14,7 @@ our_object.ask_player_count()
 our_object.ask_player_names()
 
 while True:
-    if our_object.finish:
+    if our_object.game_over:
         print('\nGood round everyone!')
         break
     if our_object.roll_count == 1:
