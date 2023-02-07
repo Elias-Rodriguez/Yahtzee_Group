@@ -1,7 +1,7 @@
 import random
 import instructions as inst
 import Yahtzee_Lower_section as scores
-
+from check_scores import check_scores
 
 class User_interactions:
 
@@ -104,6 +104,8 @@ class User_interactions:
         for die in self.dice_on_table:
             print(f'\t{die}', end='')
         print()
+        check = check_scores(self.dice_on_table)
+        check.check_all(self.dice_on_table)
 
     def display_score(self):
 
@@ -145,6 +147,8 @@ class User_interactions:
             for die in self.dice_on_table:
                 print(f'\t{die}', end='')
             print()
+            check = check_scores(self.dice_on_table)
+            check.check_all(self.dice_on_table)
             if self.roll_count < 3:
                 self.ask_player_what_to_keep()
 
